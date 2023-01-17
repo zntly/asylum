@@ -338,7 +338,7 @@ end
 local function CharAdded(char)
     local p = plrs:GetPlayerFromCharacter(char)
     local bp = p:WaitForChild("Backpack")
-    local bs = bp:FindFirstChild("bobm") or bp:FindFirstChild("death note") or bp:FindFirstChild("gender reveal") or bp:FindFirstChild("borrow")
+    local bs = bp:FindFirstChild("bobm") or bp:FindFirstChild("death note") or bp:FindFirstChild("gender reveal") or bp:FindFirstChild("borrow") or bp:FindFirstChild("pact")
     if bs then
     if not char:FindFirstChild("HumanoidRootPart") then
         local ev
