@@ -265,7 +265,7 @@ function ESP:Add(obj, options)
     local box = setmetatable({
         Name = options.Name or obj.Name,
         Type = "Box",
-        Color = options.Color --[[or self:GetColor(obj)]],
+        Color = options.Color,
         Size = options.Size or self.BoxSize,
         Object = obj,
         Player = options.Player or plrs:GetPlayerFromCharacter(obj),
@@ -338,15 +338,20 @@ end
 local function CharAdded(char)
     local p = plrs:GetPlayerFromCharacter(char)
     local bp = p:WaitForChild("Backpack")
-    local bs = bp:FindFirstChild("bobm") or bp:FindFirstChild("death note") or bp:FindFirstChild("gender reveal") or bp:FindFirstChild("borrow") or bp:FindFirstChild("pact")
-    if bs then
+    local bs = ""
+    for _, v in pairs(bp:GetChildren()) do
+        if table.find(BullshitItems, v.Name) then
+            if bs == "" then bs = v.Name else bs = bs .. ", " .. v.Name end
+        end
+    end
+    if bs ~= "" then
     if not char:FindFirstChild("HumanoidRootPart") then
         local ev
         ev = char.ChildAdded:Connect(function(c)
             if c.Name == "HumanoidRootPart" then
                 ev:Disconnect()
                 ESP:Add(char, {
-                    Name = "Has " .. bs.Name,
+                    Name = "Has " .. bs,
                     Player = p,
                     PrimaryPart = c
                 })
@@ -354,7 +359,7 @@ local function CharAdded(char)
         end)
     else
         ESP:Add(char, {
-            Name = "Has " .. bs.Name,
+            Name = "Has " .. bs,
             Player = p,
             PrimaryPart = char.HumanoidRootPart
         })
